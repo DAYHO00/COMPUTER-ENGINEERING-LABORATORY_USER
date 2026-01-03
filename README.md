@@ -19,59 +19,26 @@ Verilog HDL과 FPGA를 활용한  디지털 논리회로 및 순차회로 설계
 - [핵심 기능](#-핵심-기능)
 - [주차별 실험 내용](#-주차별-실험-내용)
 - [실험 결과 요약](#-실험-결과-요약)
-- [코드 공개 범위](#-코드-공개-범위)
 
 ---
 
 ## 🎯 주요 기능
 
-### 실시간 자세 분석
-- MediaPipe Pose Landmarker를 활용한 33개 관절 포인트 추적
-- 3D 공간에서의 정확한 관절 각도 계산
-- 코사인 유사도 실시간 유사도 측정 (0-100점)
-
-### 다양한 운동 방식
-- **샘플 영상**: 추천 요가 동작 영상 제공
-- **화면 공유**: 유튜브 영상 활용 운동
-- **웹캠 연동**: 실시간 자세 비교 및 피드백
-
-### 자세 분류 시스템
-- 40가지 요가 자세 자동 인식 (Plank, Warrior, Tree, Bridge 등)
-- 좌우 반전 자동 대응
-- 벡터화된 자세 데이터 기반 분류 (임계값 90점)
-
-### 운동 기록 관리
-- 타임라인별 자세 분석 및 점수 기록
-- 필터링 및 검색 기능
-- 상세 운동 내역 조회
+- Verilog HDL 기반 디지털 논리 회로 설계
+- 조합논리 / 순차논리 회로 직접 구현
+- Testbench 기반 Simulation 검증
+- FPGA 보드 다운로드 및 실제 동작 확인
+- Finite State Machine(Moore / Mealy) 기반 Sequence Detector 설계
 
 ---
 
 ## 🛠 기술 스택
 
-### Frontend
 ```
-Framework: Next.js 15 (App Router)
-Language: TypeScript
-UI: Tailwind CSS, Ant Design, Framer Motion
-State: Zustand
-AI/ML: MediaPipe Tasks Vision
-```
-
-### Backend
-```
-Framework: Spring Boot 3.3.2
-Language: Java 17
-Database: MySQL
-Authentication: JWT
-ORM: JPA/Hibernate
-```
-
-### Infrastructure
-```
-Containerization: Docker
-Cloud: AWS (ECR, EC2, S3)
-CI/CD: GitHub Actions
+HDL Language : Verilog
+EDA Tool : Xilinx Vivado
+Target : FPGA Board (Artix-7)
+Verification : Simulation + FPGA Hardware Test
 ```
 
 ---
@@ -79,40 +46,18 @@ CI/CD: GitHub Actions
 ## 📁 프로젝트 구조
 
 ```
-samadhi/
-├── frontend/
-│   ├── app/
-│   │   ├── (with-navbar)/
-│   │   │   ├── home/              # 메인 페이지
-│   │   │   ├── ready/             # 운동 준비 (4단계)
-│   │   │   └── record/            # 운동 기록
-│   │   └── (without-navbar)/
-│   │       ├── auth/              # 로그인/회원가입
-│   │       └── workout/           # 실시간 운동
-│   ├── components/
-│   │   ├── ready/                 # 운동 준비 UI
-│   │   ├── workout/               # 운동 중 UI
-│   │   ├── video/                 # 비디오 재생
-│   │   ├── webcam/                # 웹캠 처리
-│   │   └── timeline/              # 타임라인 클리퍼
-│   ├── lib/
-│   │   ├── mediapipe/
-│   │   │   └── angle-calculator.ts    # 관절 각도 계산
-│   │   └── poseClassifier/
-│   │       └── pose-classifier-with-vectorized.ts
-│   └── store/                     # Zustand 상태 관리
-│
-└── backend/
-    └── src/main/java/com/capstone/samadhi/
-        ├── config/                # JWT, Security, S3, CORS
-        ├── security/              # 인증/인가
-        │   ├── jwt/              # JWT 필터 및 유틸
-        │   └── service/          # UserDetailsService
-        ├── record/               # 운동 기록
-        │   ├── entity/           # Record, TimeLine
-        │   └── service/          # 기록 저장/조회
-        ├── video/                # 샘플 영상
-        └── common/               # 공통 유틸 (S3, ResponseDto)
+├── Digital-Logic-Design-Lab/
+├── ├── 1주차/
+├── │ ├── 예비보고서.pdf
+├── │ └── 결과보고서.pdf
+├── ├── 2주차/
+├── │ ├── 예비보고서.pdf
+├── │ └── 결과보고서.pdf
+├── ├── ...
+├── ├── 14주차/
+├── │ ├── 예비보고서.pdf
+├── │ └── 결과보고서.pdf
+└── └── README.md
 ```
 
 ---
@@ -120,146 +65,115 @@ samadhi/
 ## 🚀 시작하기
 
 ### 사전 요구사항
-- Node.js 18+
-- Java 17+
-- MySQL 8.0+
-- Docker (선택)
+- Xilinx Vivado
+- FPGA Board
+- Verilog HDL 기본 문법 이해
 
-### Frontend 설정
+### 실험 진행 방식
 
-```bash
-cd frontend
-npm install
-
-# 환경 변수 설정 (.env.local)
-NEXT_PUBLIC_API_URL=http://localhost:8888
-
-npm run dev
 ```
-
-### Backend 설정
-
-```bash
-cd backend
-
-# 환경 변수 설정 (.env)
-DB_HOST=jdbc:mysql://localhost:3306/samadhi
-DB_USERNAME=root
-DB_PASSWORD=your_password
-SECURITY_SECRET_KEY=your_secret_key
-S3_ACCESS_KEY=your_access_key
-S3_SECRET_KEY=your_secret_key
-DEPLOY=local
-
-./gradlew bootRun
+이론 분석
+↓
+Verilog 설계
+↓
+Simulation (Testbench)
+↓
+FPGA 다운로드
+↓
+결과 분석 및 보고서 작성
 ```
-
-### Docker 배포
-
-```bash
-# 백엔드 이미지 빌드
-docker build -t samadhi-api ./backend
-
-# Docker Compose 실행
-cd backend
-docker-compose up -d
-```
-
 ---
 
 ## 💡 핵심 기능
 
-### 1. 자세 추적 및 각도 계산
+### 1. 조합 논리 회로 설계
+- AND / OR / NOT / NAND / NOR / XOR Gate
+- De Morgan 법칙 검증
+- Boolean Function 최소화 (K-map)
 
-```typescript
-// 33개 관절 포인트에서 주요 각도 계산
-calculateAllAngles(landmarks: Landmark[]): JointAngles
-```
+### 2. Arithmetic Circuit
+- Half / Full Adder
+- Parallel Adder / Subtractor
+- BCD Adder
+- Overflow 및 Carry 분석
 
-**계산 각도**
-- 팔: 팔꿈치, 어깨 (좌/우)
-- 다리: 무릎, 엉덩이 (좌/우)
-- 몸통: 척추, 정렬
-- 손목, 발목, 목
+### 3. Decoder / Encoder / MUX
+- Decoder / Encoder
+- Priority Encoder
+- Multiplexer / Demultiplexer
 
-**특징**
-- 3D 공간 벡터 기반 계산
-- Dead Zone 필터 (±2도 떨림 방지)
-- Visibility 필터링 (임계값 0.5)
+### 4. 순차 논리 회로
+- Latch / Flip-Flop (RS, JK, D, T)
+- Counter (Up / Down / Decade)
+- Shift Register / Ring Counter
 
-### 2. 유사도 측정
-
-```typescript
-CalculateSimilarity(P1: number[], P2: number[], lambda: 1.0): number
-```
-
-- **코사인 유사도**: 자세 방향성 비교
-- **결과**: 0-100점 범위
-
-### 3. 자세 분류
-
-```typescript
-classifyPoseWithVectorized(vectorized: number[]): string
-```
-
-### 4. 타임라인 기록
-
-```typescript
-type Timeline = {
-  pose: string;
-  startTime: number;
-  endTime: number;
-  similarity: number;
-};
-```
-
-운동 중 자세별 구간을 자동 기록하고 평균 유사도를 계산합니다.
+### 5. Finite State Machine
+- Moore Machine
+- Mealy Machine
+- Sequence Detector (1101, 10101)
 
 ---
 
-## 🔄 데이터 흐름
+## 🧠 주차별 실험 내용
 
-```
-웹캠/비디오 입력
-    ↓
-MediaPipe Pose Landmarker
-    ↓
-관절 좌표 추출 (33개)
-    ↓
-벡터화 및 정규화
-    ↓
-자세 분류 + 유사도 계산
-    ↓
-실시간 피드백
-    ↓
-타임라인 기록
-    ↓
-서버 저장 (MySQL + S3)
-```
+### 1주차 – FPGA 개요 및 개발 환경
+- FPGA 구조 및 설계 흐름 이해
 
+### 2주차 – Verilog 기초
+- assign / always
+- blocking / non-blocking
+
+### 3주차 – 기본 Logic Gate
+- AND / OR / NOT Gate
+
+### 4주차 – 확장 Logic Gate
+- NAND / NOR / XOR / AOI Gate
+
+### 5주차 – Boolean Logic
+- De Morgan
+- Comparator 설계
+
+### 6주차 – Adder / Subtractor
+- Half / Full Adder
+- Code Converter
+
+### 7주차 – Parity & Error Detection
+- Parity Generator / Checker
+
+### 8주차 – 7-Segment Decoder
+- BCD → 7-Segment
+
+### 9주차 – Decoder / Encoder / MUX
+- Priority Encoder
+- Multiplexer
+
+### 10주차 – Arithmetic Circuit 심화
+- Ripple Carry Adder
+- BCD Adder
+
+### 11주차 – Flip-Flop
+- RS / JK / D / T Flip-Flop
+
+### 12주차 – Counter
+- 동기 / 비동기 Counter
+
+### 13주차 – Shift Register
+- Ring Counter
+- Up/Down Counter
+
+### 14주차 – FSM
+- Moore / Mealy
+- Sequence Detector
 
 ---
 
+## 📊 실험 결과 요약
 
-## 🚀 배포
+- Simulation 결과와 FPGA 동작 결과가 모두 일치
+- Verilog 코드가 실제 하드웨어 동작으로 연결되는 과정 이해
+- 조합논리 → 순차논리 → FSM으로 이어지는 설계 흐름 체득
 
-### GitHub Actions CI/CD
-
-```yaml
-# main 브랜치 push 시 자동 배포
-- Docker 이미지 빌드
-- AWS ECR 푸시
-- EC2 SSH 접속
-- Docker Compose 재시작
-```
-
-### 환경 설정
-
-**Production**
-- `DEPLOY=prod` 환경변수 설정
-- SameSite=None, Secure Cookie 사용
-- AWS RDS MySQL
-- AWS S3 파일 저장
+---
 
 
 
